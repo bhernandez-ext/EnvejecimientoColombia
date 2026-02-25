@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Una transición que Colombia no está procesando</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.27.0/plotly.min.js"></script>
+<style>
+:root {
+  --cream:  #F6F1E7;
+  --cream2: #EDE8DC;
+  --cream3: #E4DDD0;
+  --ink:    #18160F;
+  --ink2:   #2E2B22;
+  --ink3:   #5C5749;
+  --ink4:   #8C8679;
+  --rule:   rgba(24,22,15,0.10);
+  --rule2:  rgba(24,22,15,0.18);
+  --red:    #B83232;
+  --orange: #C96B1A;
+  --teal:   #1E6E5C;
+  --gold:   #7A5C0A;
+  --red-bg:    rgba(184,50,50,0.07);
+  --orange-bg: rgba(201,107,26,0.07);
+  --teal-bg:   rgba(30,110,92,0.07);
+  --gold-bg:   rgba(122,92,10,0.07);
+  --fd: 'Playfair Display', Georgia, serif;
+  --fs: 'Source Serif 4', Georgia, serif;
+  --fm: 'DM Mono', 'Courier New', monospace;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+body { background:var(--cream); color:var(--ink); font-family:var(--fs); -webkit-font-smoothing:antialiased; }
+
+/* ── TOPBAR ── */
+
+/* ── HERO ── */
+.hero { padding:68px 60px 52px; border-bottom:2px solid var(--ink); }
+.kicker {
+  font-family:var(--fm); font-size:10px; letter-spacing:3.5px; text-transform:uppercase;
+  color:var(--red); margin-bottom:22px; display:flex; align-items:center; gap:14px;
+}
+.kicker::before { content:''; width:28px; height:1px; background:var(--red); flex-shrink:0; }
+h1 {
+  font-family:var(--fd); font-size:clamp(2.8rem,5vw,4.4rem); font-weight:900;
+  line-height:1.06; letter-spacing:-0.025em; margin-bottom:22px; max-width:860px;
+  color:var(--ink);
+}
+h1 em { font-style:italic; color:var(--red); }
+.hero-lead {
+  font-family:var(--fs); font-size:17.5px; font-weight:400; color:var(--ink2);
+  max-width:700px; line-height:1.72; margin-bottom:38px;
+}
+.hero-meta {
+  display:flex; gap:36px; flex-wrap:wrap; padding-top:28px; border-top:1px solid var(--rule2);
+}
+.meta-item { display:flex; flex-direction:column; gap:3px; }
+.meta-label { font-family:var(--fm); font-size:9px; letter-spacing:2.5px; text-transform:uppercase; color:var(--ink4); }
+.meta-value { font-family:var(--fm); font-size:11px; color:var(--ink2); }
+
+/* ── STAT STRIP ── */
+.stats { display:grid; grid-template-columns:repeat(3,1fr); background:var(--ink); }
+.stat {
+  padding:36px 44px; border-right:1px solid rgba(246,241,231,0.08);
+  display:flex; flex-direction:column; gap:8px;
+}
+.stat:last-child { border-right:none; }
+.stat-n { font-family:var(--fd); font-size:3.8rem; font-weight:900; color:var(--red); line-height:1; }
+.stat-l { font-family:var(--fm); font-size:9.5px; letter-spacing:2.5px; text-transform:uppercase; color:rgba(246,241,231,0.38); }
+.stat-d { font-size:13.5px; color:rgba(246,241,231,0.68); line-height:1.65; font-weight:400; }
+
+/* ── SECTION SHELL ── */
+.sec { padding:60px 60px 0; }
+.sec-inner { max-width:1160px; margin:0 auto; }
+.sec-divider { border-top:1px solid var(--rule2); padding-top:60px; }
+.sec-kicker {
+  font-family:var(--fm); font-size:9.5px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--ink4); margin-bottom:12px;
+}
+h2 {
+  font-family:var(--fd); font-size:clamp(1.7rem,3vw,2.5rem); font-weight:700;
+  line-height:1.12; color:var(--ink); margin-bottom:14px;
+}
+.lead {
+  font-size:15.5px; color:var(--ink2); max-width:740px; line-height:1.78;
+  font-weight:400; margin-bottom:36px;
+}
+.lead em { font-style:italic; color:var(--ink); font-weight:600; }
+.chart-note { font-family:var(--fm); font-size:9.5px; color:var(--ink4); margin-top:10px; line-height:1.55; }
+
+/* ── CONCEPT BOX ── */
+.concept-box {
+  background:var(--ink); color:var(--cream);
+  padding:28px 36px; margin-bottom:40px;
+  display:grid; grid-template-columns:1fr 1fr; gap:28px;
+}
+.concept-item { display:flex; flex-direction:column; gap:6px; }
+.concept-item .clabel { font-family:var(--fm); font-size:9px; letter-spacing:3px; text-transform:uppercase; color:rgba(246,241,231,0.4); }
+.concept-item .ctitle { font-family:var(--fd); font-size:1.05rem; font-weight:700; color:var(--cream); }
+.concept-item .cbody { font-size:12.5px; color:rgba(246,241,231,0.65); line-height:1.65; }
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display:flex; border-bottom:2px solid var(--ink); margin-bottom:0; margin-top:8px;
+}
+.tbtn {
+  font-family:var(--fm); font-size:10px; letter-spacing:2px; text-transform:uppercase;
+  padding:16px 28px; cursor:pointer; border:none; background:transparent; color:var(--ink3);
+  border-bottom:3px solid transparent; margin-bottom:-2px; transition:all .18s;
+}
+.tbtn:hover { color:var(--ink); background:var(--cream2); }
+.tbtn.active { color:var(--red); border-bottom-color:var(--red); background:var(--cream2); font-weight:500; }
+
+/* ── VIZ LAYOUT ── */
+.tpanel { display:none; }
+.tpanel.active { display:block; }
+.vgrid { display:grid; grid-template-columns:1fr 370px; border:1px solid var(--rule2); margin-top:0; }
+.vmain { background:var(--cream); padding:28px 32px; }
+.vside { background:var(--cream2); display:flex; flex-direction:column; border-left:1px solid var(--rule2); }
+.plabel {
+  font-family:var(--fm); font-size:9px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--ink4); padding-bottom:12px; margin-bottom:18px; border-bottom:1px solid var(--rule);
+}
+
+/* Legend */
+.qleg { display:flex; gap:18px; flex-wrap:wrap; margin-bottom:16px; }
+.ql { display:flex; align-items:center; gap:7px; font-family:var(--fm); font-size:9.5px; color:var(--ink2); }
+.qd { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+
+/* Filter bar */
+.filter-bar {
+  display:flex; align-items:center; gap:12px; margin-bottom:16px;
+  flex-wrap:wrap;
+}
+.filter-bar label { font-family:var(--fm); font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--ink4); }
+.dept-select {
+  font-family:var(--fm); font-size:11px; color:var(--ink); background:var(--cream);
+  border:1px solid var(--rule2); padding:7px 12px; cursor:pointer; outline:none;
+  min-width:200px; -webkit-appearance:none; appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235C5749'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 10px center; padding-right:28px;
+}
+.q-filter {
+  font-family:var(--fm); font-size:10px; color:var(--ink3); background:var(--cream);
+  border:1px solid var(--rule2); padding:6px 10px; cursor:pointer; outline:none;
+}
+.q-filter.active { background:var(--ink); color:var(--cream); border-color:var(--ink); }
+
+/* Charts */
+#scatter-chart, #map-chart { width:100%; height:480px; }
+
+/* Detail panel */
+.hprompt {
+  display:flex; align-items:center; gap:9px; padding:14px 22px;
+  border-bottom:1px solid var(--rule); font-family:var(--fm); font-size:9px;
+  letter-spacing:2px; text-transform:uppercase; color:var(--ink4);
+}
+.pulse { width:7px; height:7px; border-radius:50%; background:var(--red); animation:pulse 2s ease-in-out infinite; flex-shrink:0; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.25;transform:scale(.65)} }
+
+.dhead { padding:20px 22px; border-bottom:1px solid var(--rule); min-height:158px; }
+.dname { font-family:var(--fd); font-size:1.55rem; font-weight:700; line-height:1.1; color:var(--ink); margin-bottom:7px; }
+.qbadge {
+  display:inline-block; font-family:var(--fm); font-size:8.5px; letter-spacing:1.5px;
+  text-transform:uppercase; padding:3px 8px; border-radius:2px; margin-bottom:11px;
+}
+.bc { background:var(--red-bg);    color:#8C1F1F; border:1px solid rgba(184,50,50,.22); }
+.bt { background:var(--orange-bg); color:#8C4500; border:1px solid rgba(201,107,26,.22); }
+.bj { background:var(--teal-bg);   color:#0E4C3D; border:1px solid rgba(30,110,92,.22); }
+.bv { background:var(--gold-bg);   color:#4D3900; border:1px solid rgba(122,92,10,.22); }
+.dins { font-size:12.5px; color:var(--ink2); line-height:1.68; font-style:italic; }
+
+/* Dual subindex score */
+.dual-score {
+  display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule);
+  border-bottom:1px solid var(--rule); border-top:1px solid var(--rule);
+}
+.sub-score { background:var(--cream2); padding:14px 16px; text-align:center; }
+.sub-score .ss-label { font-family:var(--fm); font-size:8.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink4); margin-bottom:4px; }
+.sub-score .ss-num { font-family:var(--fd); font-size:1.5rem; font-weight:700; color:var(--ink); line-height:1; }
+.sub-score .ss-rank { font-family:var(--fm); font-size:9px; color:var(--ink4); margin-top:3px; }
+
+.vlist { padding:16px 22px; border-bottom:1px solid var(--rule); }
+.vrow  { margin-bottom:13px; }
+.vhd   { display:flex; justify-content:space-between; margin-bottom:5px; }
+.vn    { font-family:var(--fm); font-size:8.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink4); }
+.vv    { font-family:var(--fm); font-size:10px; color:var(--ink); font-weight:500; }
+.vt    { height:2.5px; background:var(--rule); border-radius:2px; overflow:hidden; }
+.vf    { height:100%; border-radius:2px; transition:width .55s cubic-bezier(.4,0,.2,1); }
+.vsep  { font-family:var(--fm); font-size:8px; letter-spacing:2px; text-transform:uppercase; color:var(--ink4); opacity:.6; margin:6px 0 10px; }
+
+/* IVE score row */
+.srow { padding:14px 22px; display:flex; align-items:center; gap:14px; background:var(--cream); }
+.sring { position:relative; width:56px; height:56px; flex-shrink:0; }
+.sring svg { transform:rotate(-90deg); }
+.snum { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--fm); font-size:12px; font-weight:500; color:var(--ink); }
+.sinf .slab { font-family:var(--fm); font-size:8.5px; letter-spacing:2px; text-transform:uppercase; color:var(--ink4); margin-bottom:3px; }
+.sinf .srk  { font-family:var(--fd); font-size:1.15rem; font-weight:700; color:var(--ink); }
+.sinf .srk span { font-size:.78rem; font-weight:400; color:var(--ink4); }
+
+/* ── QUADRANT CARDS (collapsible) ── */
+.quad-section { margin-top:44px; border-top:1px solid var(--rule2); padding-top:28px; }
+.quad-toggle {
+  display:flex; align-items:center; justify-content:space-between;
+  cursor:pointer; user-select:none; padding-bottom:16px;
+}
+.quad-toggle h3 { font-family:var(--fm); font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--ink3); }
+.toggle-icon { font-family:var(--fm); font-size:11px; color:var(--ink4); transition:transform .25s; }
+.toggle-icon.open { transform:rotate(180deg); }
+.quad-body { display:none; }
+.quad-body.open { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule2); }
+.qcard {
+  background:var(--cream); padding:24px 28px;
+  border-top:3px solid transparent;
+}
+.qcard.qc { border-color:var(--red); background:var(--red-bg); }
+.qcard.qt { border-color:var(--orange); background:var(--orange-bg); }
+.qcard.qj { border-color:var(--teal); background:var(--teal-bg); }
+.qcard.qv { border-color:var(--gold); background:var(--gold-bg); }
+.qcard-title { font-family:var(--fd); font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:6px; }
+.qcard-def   { font-size:13px; color:var(--ink2); line-height:1.65; margin-bottom:12px; }
+.qcard-cons-title { font-family:var(--fm); font-size:8.5px; letter-spacing:2px; text-transform:uppercase; color:var(--ink4); margin-bottom:7px; }
+.qcard-cons { list-style:none; display:flex; flex-direction:column; gap:5px; }
+.qcard-cons li { font-size:12.5px; color:var(--ink2); line-height:1.6; padding-left:14px; position:relative; }
+.qcard-cons li::before { content:'—'; position:absolute; left:0; color:var(--ink4); font-family:var(--fm); font-size:10px; }
+
+/* ── GLOBAL CHART ── */
+#global-chart { width:100%; height:380px; }
+.chart-annotation {
+  background:var(--ink); color:var(--cream); padding:14px 20px; margin-top:14px;
+  border-left:3px solid var(--red); display:flex; align-items:flex-start; gap:12px;
+}
+.chart-annotation p { font-size:13px; line-height:1.65; }
+.chart-annotation strong { font-weight:600; }
+
+/* ── TRIPLE RANKING ── */
+.rank-tabs { display:flex; gap:1px; background:var(--rule2); margin-bottom:1px; }
+.rtbtn {
+  font-family:var(--fm); font-size:9px; letter-spacing:1.5px; text-transform:uppercase;
+  padding:11px 18px; border:none; background:var(--cream2); cursor:pointer; color:var(--ink3); transition:all .15s;
+}
+.rtbtn.active { background:var(--ink); color:var(--cream); }
+.rgrid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(265px,1fr));
+  gap:1px; background:var(--rule2);
+}
+.dc {
+  background:var(--cream); padding:16px 20px; cursor:pointer;
+  transition:background .14s; position:relative;
+}
+.dc:hover { background:var(--cream2); }
+.dc.active { background:var(--cream3); }
+.dc-stripe { position:absolute; left:0; top:0; bottom:0; width:3px; }
+.dct { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+.dcn { font-family:var(--fd); font-size:.95rem; font-weight:700; color:var(--ink); line-height:1.2; }
+.dcr { font-family:var(--fm); font-size:10px; color:var(--ink4); padding:2px 7px; border:1px solid var(--rule2); }
+.dcb { height:2px; background:var(--rule); border-radius:1px; margin-bottom:7px; overflow:hidden; }
+.dcf { height:100%; border-radius:1px; }
+.dcs { font-family:var(--fm); font-size:9.5px; color:var(--ink3); }
+.dcs strong { color:var(--ink2); font-weight:500; }
+
+/* ── METHODOLOGY ── */
+.mbox { border:1px solid var(--rule2); padding:28px 32px; background:var(--cream2); margin-top:0; }
+.mbox h3 { font-family:var(--fm); font-size:9.5px; letter-spacing:2.5px; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
+.mbox p { font-size:13.5px; color:var(--ink2); line-height:1.75; margin-bottom:10px; }
+.mbox ul { list-style:none; display:flex; flex-direction:column; gap:8px; margin-top:2px; }
+.mbox li { font-size:13px; color:var(--ink2); line-height:1.65; padding-left:16px; position:relative; }
+.mbox li::before { content:'—'; position:absolute; left:0; color:var(--red); font-family:var(--fm); font-size:10px; }
+.formula-box {
+  background:var(--ink); color:var(--cream); padding:16px 20px; margin:16px 0;
+  font-family:var(--fm); font-size:11.5px; line-height:1.8;
+}
+.formula-box .fline { margin-bottom:3px; }
+.formula-box .fnote { font-size:10px; color:rgba(246,241,231,0.5); margin-top:8px; }
+
+/* ── CIERRE ── */
+.cierre { background:var(--ink); color:var(--cream); padding:72px 60px; }
+.cierre .sec-kicker { color:rgba(246,241,231,0.35); }
+.cierre h2 { color:var(--cream); max-width:760px; margin-bottom:20px; }
+.cierre .lead { color:rgba(246,241,231,0.72); max-width:720px; }
+.cierre .lead em { color:var(--cream); font-style:italic; }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--ink); border-top:1px solid rgba(246,241,231,0.08);
+  padding:22px 60px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+}
+footer p { font-family:var(--fm); font-size:9.5px; color:rgba(246,241,231,0.35); line-height:1.6; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .hero,.sec,.cierre,footer{padding-left:24px;padding-right:24px;}
+  .stats,.vgrid,.quad-body.open,.minner,.concept-box{grid-template-columns:1fr;}
+  .tab-nav{overflow-x:auto;}
+  h1{font-size:2.4rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+
+<!-- HERO -->
+<div class="hero">
+  <div class="kicker">Análisis territorial · Envejecimiento poblacional · Capacidad de respuesta</div>
+  <h1>Una transición que Colombia <em>no está procesando</em></h1>
+  <p class="hero-lead">Colombia está envejeciendo a una velocidad para la que no tiene instituciones preparadas. El fenómeno está ocurriendo hoy de forma profundamente desigual entre territorios, y casi sin aparecer en el debate de política pública. En algunos departamentos, hay ya más personas mayores de 60 años que menores de 15. En otros, la transición demográfica todavía no ha llegado con fuerza, pero la pobreza estructural anticipa que cuando llegue, no habrá capacidad real para atender las consecuencias asociadas.</p>
+  <div class="hero-meta">
+    <div class="meta-item"><span class="meta-label">Autor</span><span class="meta-value">Brandon D. Hernández Jaramillo</span></div>
+    <div class="meta-item"><span class="meta-label">Formación</span><span class="meta-value">Internacionalista · Mg. Cooperación Internacional y Gestión de Proyectos</span></div>
+    <div class="meta-item"><span class="meta-label">Fuentes</span><span class="meta-value">DANE · DNP TerriData · MinSalud, SGSSS · MinSalud · MinTrabajo</span></div>
+    <div class="meta-item"><span class="meta-label">Cobertura</span><span class="meta-value">32 departamentos y el Distrito Capital</span></div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-n">21%</div>
+    <div class="stat-l">Máximo departamental hoy</div>
+    <div class="stat-d">Boyacá tiene más personas mayores de 60 años que menores de 15. La inversión de la pirámide poblacional que parecía lejana ya es una realidad en varios departamentos del país.</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n">70%</div>
+    <div class="stat-l">Sin cobertura pensional</div>
+    <div class="stat-d">Siete de cada diez colombianos mayores de 60 años no cuentan con pensión. La informalidad laboral de toda una vida se convierte en desprotección estructural al envejecer.</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n">30</div>
+    <div class="stat-l">Años para una transición centenaria</div>
+    <div class="stat-d">A Europa le tomó más de cien años construir sus sistemas de cuidado y protección. Colombia está recorriendo la misma transición demográfica en menos de una generación.</div>
+  </div>
+</div>
+
+<!-- ACT 1: CONTEXTO GLOBAL -->
+<div class="sec" style="padding-top:60px; padding-bottom:60px; background:var(--cream2); border-bottom:1px solid var(--rule2);">
+<div class="sec-inner">
+  <div class="sec-kicker">Contexto internacional</div>
+  <h2>Lo que tardó décadas en otros países, lo estamos viviendo a otro ritmo</h2>
+  <p class="lead">Francia tardó 60 años en doblar la proporción de su población mayor de 60. Alemania, 65. Japón lo hizo en 20 y sacudió al mundo. Colombia lo hará en 30, sin haber construido todavía los sistemas de protección que esos países tenían cuando empezaron su transición.</p>
+  <div id="global-chart"></div>
+  <div class="chart-annotation">
+    <p><strong>Cómo leer este gráfico:</strong> cada barra muestra cuántos años tardó o tardará ese país en pasar del 10% al 20% de su población mayor de 60 años, el tramo más crítico de la transición demográfica. Corea del Sur lo recorrerá en apenas 11 años. Colombia en 30. Francia y Alemania tuvieron más de seis décadas para construir sus sistemas de cuidado, pensiones e infraestructura social. La urgencia no es igual para todos.</p>
+  </div>
+  <p class="chart-note" style="margin-top:10px;">Fuente: UN World Population Prospects 2022 y proyecciones DANE. Los valores de Colombia, Brasil, Chile y Corea del Sur corresponden a proyecciones de variante media. Los de Francia, Alemania y Japón están basados en datos históricos observados.</p>
+</div>
+</div>
+
+<!-- ACT 2: CONCEPTO DEL ÍNDICE -->
+<div class="sec" style="padding-top:60px; padding-bottom:0; border-bottom:1px solid var(--rule2);">
+<div class="sec-inner">
+  <div class="sec-kicker">Marco analítico</div>
+  <h2>Qué estamos midiendo y por qué importa</h2>
+  <p class="lead" style="margin-bottom:20px; font-size:14.5px;">El Índice de Vulnerabilidad del Envejecimiento responde una pregunta concreta: ¿están los territorios colombianos preparados para el envejecimiento que se viene? Combina dos dimensiones. La primera mide qué tan rápido está envejeciendo cada departamento. La segunda mide si ese territorio tiene condiciones para responder: si su población accede a pensión, si la pobreza limita las opciones y si el sistema de salud tiene capacidad para atender una población mayor creciente. Los datos muestran que si bien Colombia viene avanzando en indicadores de bienestar desde hace algunos años, en varios departamentos el envejecimiento llegará antes de que las condiciones estén dadas para hacer frente a una población más adulta y con bajas tasas de fecundidad.</p>
+  <div class="concept-box">
+    <div class="concept-item">
+      <span class="clabel">Subíndice A</span>
+      <span class="ctitle">Presión demográfica</span>
+      <span class="cbody">Combina el estado actual del envejecimiento (% de población mayor de 60 años), la velocidad proyectada de la transición hacia 2035 (la variable más relevante para la planificación) y el índice de envejecimiento como validación convergente. Un departamento puede ser hoy relativamente joven pero estar envejeciendo muy rápido: eso lo hace urgente aunque no lo parezca.</span>
+    </div>
+    <div class="concept-item">
+      <span class="clabel">Subíndice B</span>
+      <span class="ctitle">Déficit de capacidad de respuesta</span>
+      <span class="cbody">Combina tres componentes con diferente peso: el Índice de Pobreza Multidimensional (0.35), que captura condiciones estructurales de vida en salud, educación y empleo; la cobertura del sistema pensional mediante cotizantes activos (0.35), que mide la capacidad de protección económica en la vejez; y una subdimensión de capacidad del sistema de salud (0.30), que agrupa en igual peso la disponibilidad de camas hospitalarias y la densidad de talento humano en salud. </span>
+    </div>
+  </div>
+
+  <!-- TAB NAV -->
+  <div class="tab-nav">
+    <button class="tbtn active" onclick="switchTab('scatter',this)">◎ Dispersión por cuadrantes</button>
+    <button class="tbtn" onclick="switchTab('map',this)">↯ Mapa geográfico</button>
+  </div>
+
+  <!-- SCATTER -->
+  <div class="tpanel active" id="tab-scatter">
+    <div class="vgrid">
+      <div class="vmain">
+        <div class="plabel">Eje X: Subíndice A (Presión demográfica) &nbsp;|&nbsp; Eje Y: Subíndice B (Déficit de capacidad) &nbsp;|&nbsp; Tamaño: IVE compuesto</div>
+        <div class="filter-bar">
+          <label>Filtrar departamento</label>
+          <select class="dept-select" id="scatter-filter" onchange="filterDept('s',this.value)">
+            <option value="">— Todos —</option>
+          </select>
+          <label>Cuadrante</label>
+          <select class="dept-select" id="quad-filter" onchange="filterQuad(this.value)" style="min-width:180px;">
+            <option value="">— Todos —</option>
+            <option value="Zona Crítica">Zona Crítica</option>
+            <option value="Transición avanzada">Transición avanzada</option>
+            <option value="Aún joven, estructuralmente vulnerable">Aún joven, vulnerable</option>
+            <option value="Ventana de acción">Ventana de acción</option>
+          </select>
+        </div>
+        <div class="qleg">
+          <div class="ql"><div class="qd" style="background:var(--red)"></div>Zona Crítica</div>
+          <div class="ql"><div class="qd" style="background:var(--orange)"></div>Transición avanzada</div>
+          <div class="ql"><div class="qd" style="background:var(--teal)"></div>Aún joven, estructuralmente vulnerable</div>
+          <div class="ql"><div class="qd" style="background:var(--gold)"></div>Ventana de acción</div>
+        </div>
+        <div id="scatter-chart"></div>
+      </div>
+      <div class="vside" id="detail-s">
+        <div class="hprompt"><div class="pulse"></div>Selecciona un departamento</div>
+        <div class="dhead">
+          <div class="dname" id="s-name">—</div>
+          <div id="s-badge"></div>
+          <div class="dins" id="s-ins">Haz clic en un punto del gráfico, usa el selector o selecciona una tarjeta del ranking.</div>
+        </div>
+        <div class="dual-score">
+          <div class="sub-score">
+            <div class="ss-label">Presión demográfica</div>
+            <div class="ss-num" id="s-subA" style="color:var(--red)">—</div>
+            <div class="ss-rank" id="s-rkA">—</div>
+          </div>
+          <div class="sub-score">
+            <div class="ss-label">Déficit de capacidad</div>
+            <div class="ss-num" id="s-subB" style="color:var(--teal)">—</div>
+            <div class="ss-rank" id="s-rkB">—</div>
+          </div>
+        </div>
+        <div class="vlist">
+          <div class="vsep">Presión demográfica</div>
+          <div class="vrow"><div class="vhd"><span class="vn">Pob. 60+ años (2023)</span><span class="vv" id="s-v1">—</span></div><div class="vt"><div class="vf" id="s-b1" style="width:0%;background:var(--orange)"></div></div></div>
+          <div class="vrow"><div class="vhd"><span class="vn">Velocidad proyectada 2023→2035</span><span class="vv" id="s-v2">—</span></div><div class="vt"><div class="vf" id="s-b2" style="width:0%;background:var(--red)"></div></div></div>
+          <div class="vrow"><div class="vhd"><span class="vn">Índice de envejecimiento (val.)</span><span class="vv" id="s-v3">—</span></div><div class="vt"><div class="vf" id="s-b3" style="width:0%;background:var(--orange)"></div></div></div>
+          <div class="vsep">Déficit de capacidad</div>
+          <div class="vrow"><div class="vhd"><span class="vn">Pobreza multidimensional</span><span class="vv" id="s-v4">—</span></div><div class="vt"><div class="vf" id="s-b4" style="width:0%;background:var(--teal)"></div></div></div>
+          <div class="vrow"><div class="vhd"><span class="vn">Cotizantes al sistema pensional</span><span class="vv" id="s-v5">—</span></div><div class="vt"><div class="vf" id="s-b5" style="width:0%;background:var(--teal)"></div></div></div>
+          <div class="vrow"><div class="vhd"><span class="vn">Camas hospitalarias / 1.000 hab.</span><span class="vv" id="s-v6">—</span></div><div class="vt"><div class="vf" id="s-b6" style="width:0%;background:var(--teal)"></div></div></div>
+          <div class="vrow"><div class="vhd"><span class="vn">Talento humano en salud / 10.000 hab.</span><span class="vv" id="s-v7">—</span></div><div class="vt"><div class="vf" id="s-b7" style="width:0%;background:var(--teal)"></div></div></div>
+        </div>
+        <div class="vsep" style="margin-top:10px;">Ventana de preparación</div>
+        <div class="vrow" style="align-items:center; gap:12px; padding:10px 0 6px;">
+          <div style="flex:1;">
+            <div style="font-family:var(--fm); font-size:8.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink4); margin-bottom:4px;" id="s-vent-label">—</div>
+            <div style="height:5px; background:var(--rule2); border-radius:3px; overflow:hidden;">
+              <div id="s-vent-bar" style="height:100%; border-radius:3px; width:0%; transition:width .5s;"></div>
+            </div>
+          </div>
+          <div style="text-align:right; min-width:80px;">
+            <div style="font-family:var(--fd); font-size:18px; font-weight:700;" id="s-vent-years">—</div>
+            <div style="font-family:var(--fm); font-size:9px; color:var(--ink3);" id="s-vent-sub">—</div>
+          </div>
+        </div>
+        <div class="srow">
+          <div class="sring">
+            <svg width="56" height="56" viewBox="0 0 56 56">
+              <circle cx="28" cy="28" r="21" fill="none" stroke="var(--rule2)" stroke-width="3"/>
+              <circle id="s-ring" cx="28" cy="28" r="21" fill="none" stroke="var(--red)" stroke-width="3"
+                stroke-dasharray="131.9" stroke-dashoffset="131.9" stroke-linecap="round"
+                style="transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1),stroke .3s"/>
+            </svg>
+            <div class="snum" id="s-score">—</div>
+          </div>
+          <div class="sinf">
+            <div class="slab">IVE: Índice compuesto</div>
+            <div class="srk" id="s-rank">—<span> de 33 entidades</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAP -->
+  <div class="tpanel" id="tab-map">
+    <div class="vgrid">
+      <div class="vmain">
+        <div class="plabel">Posición geográfica de cada departamento &nbsp;|&nbsp; Tamaño: IVE &nbsp;|&nbsp; Color: cuadrante</div>
+        <div class="filter-bar">
+          <label>Filtrar departamento</label>
+          <select class="dept-select" id="map-filter" onchange="filterDept('m',this.value)">
+            <option value="">— Todos —</option>
+          </select>
+        </div>
+        <div class="qleg">
+          <div class="ql"><div class="qd" style="background:var(--red)"></div>Zona Crítica</div>
+          <div class="ql"><div class="qd" style="background:var(--orange)"></div>Transición avanzada</div>
+          <div class="ql"><div class="qd" style="background:var(--teal)"></div>Aún joven, estructuralmente vulnerable</div>
+          <div class="ql"><div class="qd" style="background:var(--gold)"></div>Ventana de acción</div>
+        </div>
+        <div id="map-chart"></div>
+      </div>
+      <div class="vside" id="detail-m">
+        <div class="hprompt"><div class="pulse"></div>Selecciona un departamento</div>
+        <div class="dhead">
+          <div class="dname" id="m-name">—</div>
+          <div id="m-badge"></div>
+          <div class="dins" id="m-ins">Haz clic en una burbuja del mapa o usa el selector para ver el perfil de vulnerabilidad del departamento.</div>
+        </div>
+        <div class="dual-score">
+          <div class="sub-score">
+            <div class="ss-label">Presión demográfica</div>
+            <div class="ss-num" id="m-subA" style="color:var(--red)">—</div>
+            <div class="ss-rank" id="m-rkA">—</div>
+          </div>
+          <div class="sub-score">
+            <div class="ss-label">Déficit de capacidad</div>
+            <div class="ss-num" id="m-subB" style="color:var(--teal)">—</div>
+            <div class="ss-rank" id="m-rkB">—</div>
+          </div>
+        </div>
+        <div class="vlist">
+          <div class="vsep">Presión demográfica</div>
+          <div class="vrow"><div class="vhd"><span class="vn">Pob. 60+ años (2023)</span><span class="vv" id="m-v1">—</span></div><div class="vt"><div class="vf" id="m-b1" style="width:0%;background:var(--orange)"></div></div></div>
+          <div class="vrow"><div class="vhd"><span class="vn">Velocidad proyectada 2023→2035</span><span class="vv" id="m-v2">—</span></div><div class="vt"><div class="vf" id="m-b2" style="width:0%;background:var(--red)"></div></div></div>
+          <div class="vrow"><div class="vhd"><span class="vn">Índice de envejecimiento (val.)</span><span class="vv" id="m-v3">—</span></div><div class="vt"><div class="vf" id="m-b3" style="width:0%;background:var(--orange)"></div></div></div>
+          <div class="vsep">Déficit de capacidad</div>
+          <div class="vrow"><div class="vhd"><span class="vn">Pobreza multidimensional</span><span class="vv" id="m-v4">—</span></div><div class="vt"><div class="vf" id="m-b4" style="width:0%;background:var(--teal)"></div></div></div>
+          <div class="vrow"><div class="vhd"><span class="vn">Cotizantes al sistema pensional</span><span class="vv" id="m-v5">—</span></div><div class="vt"><div class="vf" id="m-b5" style="width:0%;background:var(--teal)"></div></div></div>
+          <div class="vrow"><div class="vhd"><span class="vn">Camas hospitalarias / 1.000 hab.</span><span class="vv" id="m-v6">—</span></div><div class="vt"><div class="vf" id="m-b6" style="width:0%;background:var(--teal)"></div></div></div>
+          <div class="vrow"><div class="vhd"><span class="vn">Talento humano en salud / 10.000 hab.</span><span class="vv" id="m-v7">—</span></div><div class="vt"><div class="vf" id="m-b7" style="width:0%;background:var(--teal)"></div></div></div>
+        </div>
+        <div class="vsep" style="margin-top:10px;">Ventana de preparación</div>
+        <div class="vrow" style="align-items:center; gap:12px; padding:10px 0 6px;">
+          <div style="flex:1;">
+            <div style="font-family:var(--fm); font-size:8.5px; letter-spacing:1px; text-transform:uppercase; color:var(--ink4); margin-bottom:4px;" id="m-vent-label">—</div>
+            <div style="height:5px; background:var(--rule2); border-radius:3px; overflow:hidden;">
+              <div id="m-vent-bar" style="height:100%; border-radius:3px; width:0%; transition:width .5s;"></div>
+            </div>
+          </div>
+          <div style="text-align:right; min-width:80px;">
+            <div style="font-family:var(--fd); font-size:18px; font-weight:700;" id="m-vent-years">—</div>
+            <div style="font-family:var(--fm); font-size:9px; color:var(--ink3);" id="m-vent-sub">—</div>
+          </div>
+        </div>
+        <div class="srow">
+          <div class="sring">
+            <svg width="56" height="56" viewBox="0 0 56 56">
+              <circle cx="28" cy="28" r="21" fill="none" stroke="var(--rule2)" stroke-width="3"/>
+              <circle id="m-ring" cx="28" cy="28" r="21" fill="none" stroke="var(--red)" stroke-width="3"
+                stroke-dasharray="131.9" stroke-dashoffset="131.9" stroke-linecap="round"
+                style="transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1),stroke .3s"/>
+            </svg>
+            <div class="snum" id="m-score">—</div>
+          </div>
+          <div class="sinf">
+            <div class="slab">IVE: Índice compuesto</div>
+            <div class="srk" id="m-rank">—<span> de 33 entidades</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUADRANT EXPLAINER (collapsible) -->
+  <div class="quad-section">
+    <div class="quad-toggle" onclick="toggleQuads(this)">
+      <h3>¿Qué significa cada cuadrante? Criterios e implicaciones de política</h3>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="quad-body" id="quad-body">
+      <div class="qcard qc">
+        <div class="qcard-title">Zona Crítica</div>
+        <div class="qcard-def">Alta presión demográfica y alto déficit de capacidad de respuesta. Son los departamentos donde el envejecimiento ya está avanzado y la pobreza estructural limita severamente la capacidad de atender esa demanda. La brecha entre necesidad y recursos es la más pronunciada.</div>
+        <div class="qcard-cons-title">Consecuencias si no se actúa</div>
+        <ul class="qcard-cons">
+          <li>Colapso de las redes informales de cuidado familiar que hoy sostienen a la mayoría de adultos mayores sin pensión.</li>
+          <li>Presión insostenible sobre servicios de salud pública sin infraestructura ni personal geriátrico suficiente.</li>
+          <li>Profundización de trampas de pobreza intergeneracional en hogares donde adultos productivos asumen el cuidado.</li>
+        </ul>
+      </div>
+      <div class="qcard qt">
+        <div class="qcard-title">Transición avanzada</div>
+        <div class="qcard-def">Alta presión demográfica con condiciones estructurales relativamente mejores. Son departamentos con envejecimiento avanzado pero mayor capacidad relativa. La ventana para fortalecer la protección social se está cerrando aceleradamente.</div>
+        <div class="qcard-cons-title">Consecuencias si no se actúa</div>
+        <ul class="qcard-cons">
+          <li>El rezago en cobertura pensional se convierte en un pasivo fiscal que los gobiernos locales no podrán absorber.</li>
+          <li>La demanda de servicios especializados de cuidado superará la oferta disponible en menos de una generación.</li>
+          <li>Territorios que hoy parecen estables enfrentarán una presión demográfica para la que no están construyendo capacidad.</li>
+        </ul>
+      </div>
+      <div class="qcard qj">
+        <div class="qcard-title">Aún joven, estructuralmente vulnerable</div>
+        <div class="qcard-def">Baja presión demográfica actual pero alto déficit estructural. La transición aún no llegó con fuerza, pero la pobreza multidimensional y la baja cobertura pensional anticipan que cuando llegue, el territorio no estará en condiciones de responder.</div>
+        <div class="qcard-cons-title">Consecuencias si no se actúa</div>
+        <ul class="qcard-cons">
+          <li>Se pierde la única ventana para construir capacidad institucional antes de que el envejecimiento se acelere.</li>
+          <li>Se replican los errores de los territorios en zona crítica, sin el tiempo para corregirlos.</li>
+          <li>La deuda social se paga en términos de bienestar de generaciones que hoy son jóvenes y productivas.</li>
+        </ul>
+      </div>
+      <div class="qcard qv">
+        <div class="qcard-title" style="color:var(--gold)">Ventana de acción</div>
+        <div class="qcard-def">Baja presión demográfica y déficit de capacidad por debajo del umbral crítico según estándares internacionales (OPHI, OIT, OMS). Con datos actualizados a 2024, <strong>11 entidades territoriales se encuentran en este cuadrante</strong>. Eso no significa que estén en situación óptima: significa que han avanzado suficientemente en capacidad estructural básica y aún no enfrentan la presión demográfica más intensa. Es el cuadrante con mayor margen de anticipación para fortalecer sus sistemas antes de que la transición llegue con fuerza.</div>
+        <div class="qcard-cons-title">Implicación de política</div>
+        <ul class="qcard-cons">
+          <li>La ausencia de territorios en este cuadrante refuerza la urgencia del análisis: no hay un grupo de entidades territoriales que sirva como modelo interno de referencia para las demás.</li>
+          <li>La política diferenciada es posible y necesaria. Los territorios en Ventana de acción tienen margen para anticiparse y construir capacidad antes de que el envejecimiento se acelere. Los de Transición avanzada requieren intervención inmediata con énfasis en protección social, cuidados y sistema de salud. La Zona Crítica está actualmente vacía según los datos de 2024, pero varios territorios en Transición avanzada están próximos al umbral.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:60px;"></div>
+</div><!-- /sec-inner -->
+</div><!-- /sec -->
+
+
+
+<!-- RANKING -->
+<div class="sec" style="padding-top:60px; padding-bottom:60px; background:var(--cream2); border-top:1px solid var(--rule2); border-bottom:1px solid var(--rule2);">
+<div class="sec-inner">
+  <div class="sec-kicker">Ranking territorial</div>
+  <h2>Los 32 departamentos y el Distrito Capital en tres lecturas simultáneas</h2>
+  <p class="lead">El índice se puede leer desde tres perspectivas distintas que cuentan historias diferentes. Una entidad territorial puede ocupar posiciones muy distintas según qué dimensión se priorice, y esa tensión es parte del diagnóstico.</p>
+  <div class="rank-tabs">
+    <button class="rtbtn active" onclick="switchRank('ive',this)">IVE: Índice compuesto</button>
+    <button class="rtbtn" onclick="switchRank('subA',this)">Presión demográfica</button>
+    <button class="rtbtn" onclick="switchRank('subB',this)">Déficit de capacidad</button>
+  </div>
+  <div class="rgrid" id="rgrid"></div>
+</div>
+</div>
+
+<!-- METHODOLOGY -->
+<div class="sec" style="padding-top:60px; padding-bottom:60px; border-bottom:1px solid var(--rule2);">
+<div class="sec-inner">
+  <div class="sec-kicker">Nota metodológica</div>
+  <div onclick="toggleMeto(this)" style="display:flex; align-items:center; justify-content:space-between; cursor:pointer; user-select:none; padding-bottom:16px; border-bottom:1px solid var(--rule2); margin-bottom:0;">
+    <h2 style="margin:0;">Índice de Vulnerabilidad del Envejecimiento (IVE)</h2>
+    <span class="meto-toggle-icon" style="font-family:var(--fm); font-size:10px; letter-spacing:1.5px; color:var(--ink4); white-space:nowrap; margin-left:24px;">▼ VER NOTA</span>
+  </div>
+  <div class="meto-body" style="display:none; margin-top:32px;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="minner">
+    <div class="mbox">
+      <h3>Construcción del índice</h3>
+      <p>El IVE es un indicador compuesto de segunda generación que supera el enfoque de suma lineal simple. Combina dos subíndices conceptualmente independientes (presión demográfica y déficit de capacidad de respuesta) mediante una función que incluye un término de interacción multiplicativo.</p>
+      <div class="formula-box">
+        <div class="fline">SubA = 0.35·(% pob. 60+) + 0.40·(velocidad) + 0.25·(índice env.)</div>
+        <div class="fline">SubB = 0.35·(IPM) + 0.35·(cotizantes⁻¹) + 0.30·(subdim. salud)</div>
+        <div class="fline" style="padding-left:16px;font-size:12px;opacity:0.75">subdim. salud = 0.50·(camas⁻¹) + 0.50·(TH en salud⁻¹)</div>
+        <div class="fline" style="margin-top:6px;font-weight:500;">IVE = 0.45·SubA + 0.45·SubB + 0.10·(SubA×SubB/100)</div>
+        <div class="fnote">Variables de SubA normalizadas min-max interno. Variables de SubB normalizadas contra goalposts fijos OMS/OCDE. Mayor valor = mayor vulnerabilidad.</div>
+      </div>
+      <p>La equiponderación entre SubA y SubB (0.45 cada uno) sigue el principio metodológico de pesos iguales en ausencia de evidencia empírica que justifique una ponderación diferencial, el mismo enfoque del IDH del PNUD. Dentro de SubA, la velocidad proyectada recibe mayor peso (0.40) por ser la variable más relevante para la planificación de política pública. Dentro de SubB, IPM y afiliados contributivos tienen peso igual (0.35 cada uno). La capacidad del sistema de salud se integra como subdimensión (0.30) en lugar de dos variables separadas: agrupar camas hospitalarias y talento humano en un componente único evita que tres variables del mismo tema sanitario sobre-ponderen el SubB respecto a pobreza estructural y protección social. Las variables de SubB se normalizan contra goalposts fijos OMS, no contra el rango observado, para garantizar comparabilidad entre actualizaciones y anclar el umbral de cuadrante en valores con significado sustantivo independiente del dataset.</p>
+      <p>El término de interacción (0.10·SubA·SubB/100) garantiza que la combinación simultánea de alta presión y alto déficit produzca un índice más elevado que la simple suma de sus partes. Esto tiene sustento conceptual: un territorio que envejece rápido <em>y</em> carece de capacidad de respuesta enfrenta una convergencia de riesgos cualitativamente distinta a la de un territorio con solo uno de esos factores.</p>
+      <h3 style="margin-top:16px;">Umbrales y cuadrantes</h3>
+      <p>Los cuadrantes se definen a partir de estándares internacionales, no de medianas internas. El umbral de SubA corresponde al valor que un territorio obtendría al estar exactamente en el criterio de "sociedad envejecida" de la ONU (14% de población mayor de 60). Para SubB, las variables se normalizan contra <strong>goalposts fijos derivados de referencias OMS</strong>, en lugar del mínimo y máximo observados: IPM entre 0% y 100% (escala natural), afiliados contributivos entre 0 y 1.000 por 1.000 hab. (cobertura universal), camas entre 0 y 5 por 1.000 hab. (OMS sistemas consolidados), y talento humano entre 0 y 150 por 10.000 hab. (promedio OCDE, tres veces el umbral mínimo OMS). Este diseño garantiza que el umbral de SubB (51.3) sea estable entre actualizaciones de datos y preserve el significado exacto de los estándares: IPM=25% (OPHI) siempre equivale a 25 en la escala, cotizantes=300 siempre equivale a 70 invertido, y así sucesivamente. Un hallazgo metodológicamente relevante: 20 de los 33 departamentos superan el estándar OCDE de talento humano en salud (150/10.000), lo que refleja una fortaleza histórica del sistema colombiano. Los 13 departamentos con déficit respecto al estándar OCDE concentran principalmente territorios periféricos y de frontera. La variable permanece en el modelo porque su variación entre territorios es informativa y captura tanto el déficit relativo como la fortaleza estructural.</p>
+    </div>
+    <div class="mbox">
+      <h3>Variables, fuentes y período</h3>
+      <ul>
+        <li><strong>% de población de 60 años y más (2023)</strong>. Estado actual del envejecimiento. Proyecciones poblacionales DANE con base en Censo 2018. DNP TerriData, variable Var17.</li>
+        <li><strong>Velocidad de envejecimiento proyectada (2023–2035)</strong>. Cambio en puntos porcentuales de la población mayor de 60. Usa proyecciones oficiales DANE para capturar la trayectoria futura relevante para la planificación de política pública. DNP TerriData, Var17.</li>
+        <li><strong>Índice de envejecimiento 2023</strong>. Número de personas de 60 años y más por cada 100 menores de 15. Opera como variable de validación convergente del subíndice de presión. DNP TerriData, Var31.</li>
+        <li><strong>Índice de Pobreza Multidimensional (IPM, 2024)</strong>. Proxy multidimensional de capacidad estructural del territorio: acceso a salud, educación, condiciones laborales y vivienda. DANE, Encuesta Nacional de Calidad de Vida (ENCV) 2024.</li>
+        <li><strong>Afiliados al régimen contributivo de salud (2024)</strong>. Proxy de cobertura formal del mercado laboral y protección social. Valor por cada 1.000 habitantes. Ministerio de Salud y Protección Social, Tabla de afiliación SGSSS diciembre 2024.</li>
+        <li><strong>Camas hospitalarias instaladas por 1.000 habitantes (2023)</strong>. Indicador de infraestructura física del sistema de salud. El umbral mínimo de la OMS es 2,5 camas por 1.000 habitantes. Fuente: Registro Especial de Prestadores de Servicios de Salud (REPS), MinSalud.</li>
+        <li><strong>Talento humano en salud por 10.000 habitantes (2025)</strong>. Fuerza laboral disponible del sistema de salud, independientemente de la especialización. Fuente: RETHUS, Ministerio de Salud y Protección Social.</li>
+      </ul>
+      <h3 style="margin-top:16px;">Limitaciones metodológicas</h3>
+      <p>Las variables de SubB corresponden a distintos cortes temporales: IPM 2024 (ENCV), régimen contributivo diciembre 2024, camas hospitalarias diciembre 2023 (REPS) y talento humano en salud 2025 (RETHUS). La mayor distancia temporal existe entre las variables demográficas (proyecciones 2023-2035) y los datos de infraestructura de salud. El índice mide vulnerabilidad relativa entre departamentos colombianos, no en términos comparables con otros países. Las proyecciones demográficas del DANE asumen continuidad de tendencias y no incorporan shocks migratorios o sanitarios extraordinarios. La variable de cotizantes usa afiliados al régimen contributivo como proxy del mercado laboral formal, que es una aproximación imperfecta respecto a cotizantes directos al sistema pensional.</p>
+    </div>
+  </div>
+  </div><!-- /meto-body -->
+</div>
+</div>
+
+<!-- CIERRE -->
+<div class="cierre">
+  <div class="sec-inner" style="max-width:1160px;margin:0 auto;">
+    <div class="sec-kicker">Reflexión final</div>
+    <h2>Los datos están.<br>La decisión política, todavía no.</h2>
+    <p class="lead">Este análisis busca generar un diagnóstico de país. Los Estados que han tenido mejor desempeño afrontando el envejecimiento poblacional se destacan por las decisiones anticipadas en pensiones, en sistemas de cuidado, en infraestructura y en ordenamiento territorial. Colombia tiene territorios en estadios distintos de esta transición demográfica. <em>¿Cómo afrontaremos la realidad inminente?</em></p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Brandon D. Hernández Jaramillo · Internacionalista · Mg. Cooperación Internacional y Gestión de Proyectos<br>
+  Fuentes: DANE · DNP TerriData · Ministerio de Trabajo / FILCO · UN World Population Prospects 2022</p>
+  <p style="text-align:right">Colombia envejece.<br>La pregunta es si lo hace con dignidad.</p>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────────────────────────────────────
+const DATA = [
+  {r:1, rA:1, rB:23, d:"Boyacá", lt:5.83, ln:-73.0, p60:21.43,vel:5.52,env:102.5,ipm:6.9,cot:398.7,camas:1.46,th:159.8,sal:35.4, subA:97.8,subB:34.1,ive:62.7,q:"Transición avanzada", nA:100.0,nV:95.5,nE:98.3,nI:6.9,nC:60.1,nCam:70.8,nTH:0.0,nSal:35.4},
+  {r:2, rA:2, rB:19, d:"Cundinamarca", lt:5.0, ln:-74.0, p60:19.98,vel:4.66,env:100.3,ipm:7.4,cot:472.6,camas:1.11,th:101.3,sal:55.1, subA:85.2,subB:37.6,ive:58.5,q:"Transición avanzada", nA:90.8,nV:73.7,nE:95.8,nI:7.4,nC:52.7,nCam:77.8,nTH:32.5,nSal:55.1},
+  {r:3, rA:3, rB:27, d:"Caldas", lt:5.3, ln:-75.3, p60:19.57,vel:4.57,env:96.7,ipm:9.2,cot:473.0,camas:2.29,th:173.4,sal:27.1, subA:82.4,subB:29.8,ive:52.9,q:"Transición avanzada", nA:88.2,nV:71.5,nE:91.8,nI:9.2,nC:52.7,nCam:54.2,nTH:0.0,nSal:27.1},
+  {r:4, rA:4, rB:29, d:"Quindío", lt:4.46, ln:-75.67, p60:19.81,vel:4.28,env:104.0,ipm:7.4,cot:509.7,camas:2.42,th:184.9,sal:25.8, subA:82.0,subB:27.5,ive:51.5,q:"Transición avanzada", nA:89.7,nV:64.1,nE:100.0,nI:7.4,nC:49.0,nCam:51.6,nTH:0.0,nSal:25.8},
+  {r:5, rA:5, rB:26, d:"Santander", lt:6.5, ln:-73.5, p60:18.07,vel:4.82,env:85.8,ipm:6.8,cot:461.6,camas:2.0,th:183.1,sal:30.0, subA:78.6,subB:30.2,ive:51.3,q:"Transición avanzada", nA:78.7,nV:77.8,nE:79.6,nI:6.8,nC:53.8,nCam:60.0,nTH:0.0,nSal:30.0},
+  {r:6, rA:9, rB:20, d:"Tolima", lt:4.0, ln:-75.3, p60:19.27,vel:3.7,env:85.7,ipm:12.6,cot:362.2,camas:1.88,th:160.4,sal:31.2, subA:69.9,subB:36.1,ive:50.2,q:"Transición avanzada", nA:86.3,nV:49.5,nE:79.5,nI:12.6,nC:63.8,nCam:62.4,nTH:0.0,nSal:31.2},
+  {r:7, rA:12, rB:10, d:"Nariño", lt:1.5, ln:-77.5, p60:15.48,vel:3.59,env:74.0,ipm:18.1,cot:164.8,camas:1.65,th:145.0,sal:35.1, subA:57.1,subB:46.1,ive:51.3,q:"Transición avanzada", nA:62.3,nV:46.7,nE:66.3,nI:18.1,nC:83.5,nCam:67.0,nTH:3.3,nSal:35.1},
+  {r:8, rA:7, rB:28, d:"Valle del Cauca", lt:3.8, ln:-76.5, p60:17.94,vel:4.55,env:80.4,ipm:6.2,cot:529.1,camas:1.8,th:213.6,sal:32.0, subA:74.0,subB:28.3,ive:48.1,q:"Transición avanzada", nA:77.9,nV:71.0,nE:73.5,nI:6.2,nC:47.1,nCam:64.0,nTH:0.0,nSal:32.0},
+  {r:9, rA:8, rB:31, d:"Risaralda", lt:5.3, ln:-76.0, p60:17.96,vel:4.23,env:85.2,ipm:9.5,cot:588.1,camas:1.97,th:183.6,sal:30.3, subA:72.2,subB:26.8,ive:46.5,q:"Transición avanzada", nA:78.0,nV:62.9,nE:78.9,nI:9.5,nC:41.2,nCam:60.6,nTH:0.0,nSal:30.3},
+  {r:10, rA:6, rB:33, d:"Bogotá", lt:4.7, ln:-74.1, p60:14.5,vel:5.7,env:77.9,ipm:5.4,cot:755.2,camas:1.95,th:315.1,sal:30.5, subA:77.3,subB:19.6,ive:45.1,q:"Transición avanzada", nA:56.1,nV:100.0,nE:70.7,nI:5.4,nC:24.5,nCam:61.0,nTH:0.0,nSal:30.5},
+  {r:11, rA:13, rB:15, d:"Norte de Santander", lt:7.9, ln:-72.5, p60:13.38,vel:3.95,env:55.1,ipm:15.2,cot:274.8,camas:1.48,th:137.6,sal:39.4, subA:50.7,subB:42.5,ive:44.1,q:"Transición avanzada", nA:49.0,nV:55.8,nE:45.1,nI:15.2,nC:72.5,nCam:70.4,nTH:8.3,nSal:39.4},
+  {r:12, rA:17, rB:6, d:"Córdoba", lt:8.3, ln:-75.6, p60:13.08,vel:3.38,env:47.8,ipm:25.7,cot:182.2,camas:2.2,th:106.3,sal:42.5, subA:42.3,subB:50.4,ive:43.8,q:"Transición avanzada", nA:47.1,nV:41.4,nE:36.9,nI:25.7,nC:81.8,nCam:56.0,nTH:29.1,nSal:42.5},
+  {r:13, rA:16, rB:12, d:"Arauca", lt:6.5, ln:-71.0, p60:10.53,vel:4.36,env:38.0,ipm:17.7,cot:170.6,camas:1.66,th:280.2,sal:33.4, subA:43.8,subB:45.2,ive:42.0,q:"Transición avanzada", nA:30.9,nV:66.2,nE:25.9,nI:17.7,nC:82.9,nCam:66.8,nTH:0.0,nSal:33.4},
+  {r:14, rA:18, rB:8, d:"Sucre", lt:9.0, ln:-75.0, p60:13.23,vel:3.27,env:48.4,ipm:21.8,cot:166.7,camas:2.75,th:113.8,sal:34.5, subA:41.6,subB:47.1,ive:41.9,q:"Ventana de acción", nA:48.0,nV:38.6,nE:37.6,nI:21.8,nC:83.3,nCam:45.0,nTH:24.1,nSal:34.5},
+  {r:15, rA:19, rB:11, d:"Cauca", lt:2.5, ln:-76.8, p60:13.16,vel:3.13,env:53.6,ipm:14.0,cot:189.2,camas:1.45,th:131.5,sal:41.6, subA:41.6,subB:45.8,ive:41.2,q:"Ventana de acción", nA:47.6,nV:35.1,nE:43.4,nI:14.0,nC:81.1,nCam:71.0,nTH:12.3,nSal:41.6},
+  {r:16, rA:11, rB:30, d:"Antioquia", lt:7.0, ln:-75.5, p60:15.37,vel:4.1,env:68.2,ipm:10.9,cot:594.3,camas:1.9,th:177.4,sal:31.0, subA:60.4,subB:27.3,ive:41.1,q:"Transición avanzada", nA:61.6,nV:59.6,nE:59.8,nI:10.9,nC:40.6,nCam:62.0,nTH:0.0,nSal:31.0},
+  {r:17, rA:15, rB:21, d:"Casanare", lt:5.5, ln:-72.0, p60:11.46,vel:4.6,env:43.1,ipm:11.3,cot:414.2,camas:1.34,th:181.1,sal:36.6, subA:49.7,subB:35.4,ive:40.1,q:"Transición avanzada", nA:36.8,nV:72.2,nE:31.6,nI:11.3,nC:58.6,nCam:73.2,nTH:0.0,nSal:36.6},
+  {r:18, rA:30, rB:1, d:"Vichada", lt:4.5, ln:-69.5, p60:7.17,vel:2.86,env:22.0,ipm:70.2,cot:103.2,camas:0.57,th:1030.8,sal:44.3, subA:16.7,subB:69.3,ive:39.9,q:"Aún joven, estructuralmente vulnerable", nA:9.6,nV:28.3,nE:8.0,nI:70.2,nC:89.7,nCam:88.6,nTH:0.0,nSal:44.3},
+  {r:19, rA:10, rB:32, d:"San Andrés", lt:12.5, ln:-81.7, p60:14.25,vel:4.78,env:62.8,ipm:6.0,cot:678.0,camas:2.07,th:587.0,sal:29.3, subA:63.2,subB:22.2,ive:39.8,q:"Transición avanzada", nA:54.5,nV:76.8,nE:53.8,nI:6.0,nC:32.2,nCam:58.6,nTH:0.0,nSal:29.3},
+  {r:20, rA:14, rB:24, d:"Meta", lt:3.5, ln:-73.0, p60:12.18,vel:4.4,env:46.9,ipm:10.4,cot:434.6,camas:1.9,th:172.3,sal:31.0, subA:50.3,subB:32.7,ive:39.0,q:"Transición avanzada", nA:41.4,nV:67.2,nE:35.9,nI:10.4,nC:56.5,nCam:62.0,nTH:0.0,nSal:31.0},
+  {r:21, rA:28, rB:3, d:"Vaupés", lt:1.0, ln:-70.5, p60:7.67,vel:3.28,env:18.3,ipm:37.4,cot:109.4,camas:0.69,th:103.1,sal:58.7, subA:21.0,subB:61.9,ive:38.6,q:"Aún joven, estructuralmente vulnerable", nA:12.8,nV:38.9,nE:3.8,nI:37.4,nC:89.1,nCam:86.2,nTH:31.2,nSal:58.7},
+  {r:22, rA:22, rB:9, d:"Putumayo", lt:0.5, ln:-76.5, p60:10.7,vel:3.06,env:40.6,ipm:11.8,cot:130.9,camas:1.74,th:125.9,sal:40.6, subA:31.7,subB:46.7,ive:36.8,q:"Ventana de acción", nA:32.0,nV:33.3,nE:28.8,nI:11.8,nC:86.9,nCam:65.2,nTH:16.0,nSal:40.6},
+  {r:23, rA:21, rB:16, d:"Bolívar", lt:8.5, ln:-74.5, p60:11.97,vel:3.34,env:41.4,ipm:15.6,cot:308.1,camas:2.24,th:124.4,sal:36.1, subA:37.6,subB:40.5,ive:36.7,q:"Ventana de acción", nA:40.1,nV:40.4,nE:29.7,nI:15.6,nC:69.2,nCam:55.2,nTH:17.0,nSal:36.1},
+  {r:24, rA:24, rB:14, d:"Magdalena", lt:10.0, ln:-74.2, p60:11.29,vel:2.93,env:37.3,ipm:19.2,cot:259.3,camas:2.96,th:103.6,sal:35.8, subA:30.8,subB:43.4,ive:34.7,q:"Ventana de acción", nA:35.7,nV:30.1,nE:25.1,nI:19.2,nC:74.1,nCam:40.8,nTH:30.9,nSal:35.8},
+  {r:25, rA:25, rB:13, d:"Caquetá", lt:1.0, ln:-74.0, p60:10.32,vel:3.09,env:35.2,ipm:13.9,cot:175.0,camas:1.81,th:145.4,sal:33.4, subA:29.7,subB:43.8,ive:34.4,q:"Ventana de acción", nA:29.6,nV:34.1,nE:22.8,nI:13.9,nC:82.5,nCam:63.8,nTH:3.0,nSal:33.4},
+  {r:26, rA:29, rB:5, d:"La Guajira", lt:11.5, ln:-72.5, p60:8.64,vel:2.39,env:28.2,ipm:39.3,cot:150.3,camas:2.0,th:102.6,sal:45.8, subA:16.9,subB:57.2,ive:34.3,q:"Aún joven, estructuralmente vulnerable", nA:18.9,nV:16.4,nE:14.9,nI:39.3,nC:85.0,nCam:60.0,nTH:31.6,nSal:45.8},
+  {r:27, rA:32, rB:2, d:"Chocó", lt:6.0, ln:-77.0, p60:9.11,vel:1.74,env:26.8,ipm:33.9,cot:104.0,camas:1.24,th:74.1,sal:62.9, subA:11.0,subB:62.1,ive:33.6,q:"Aún joven, estructuralmente vulnerable", nA:21.9,nV:0.0,nE:13.4,nI:33.9,nC:89.6,nCam:75.2,nTH:50.6,nSal:62.9},
+  {r:28, rA:27, rB:7, d:"Guaviare", lt:2.0, ln:-72.5, p60:9.19,vel:2.76,env:30.2,ipm:21.3,cot:167.0,camas:1.13,th:169.0,sal:38.7, subA:22.5,subB:48.2,ive:32.9,q:"Ventana de acción", nA:22.4,nV:25.8,nE:17.2,nI:21.3,nC:83.3,nCam:77.4,nTH:0.0,nSal:38.7},
+  {r:29, rA:23, rB:18, d:"Huila", lt:2.5, ln:-75.5, p60:12.61,vel:2.52,env:44.0,ipm:10.9,cot:280.0,camas:1.76,th:165.8,sal:32.4, subA:31.5,subB:38.7,ive:32.8,q:"Ventana de acción", nA:44.1,nV:19.7,nE:32.7,nI:10.9,nC:72.0,nCam:64.8,nTH:0.0,nSal:32.4},
+  {r:30, rA:20, rB:25, d:"Atlántico", lt:10.7, ln:-74.9, p60:12.27,vel:3.27,env:48.0,ipm:9.5,cot:424.8,camas:2.61,th:175.4,sal:23.9, subA:39.4,subB:30.6,ive:32.7,q:"Ventana de acción", nA:42.0,nV:38.6,nE:37.1,nI:9.5,nC:57.5,nCam:47.8,nTH:0.0,nSal:23.9},
+  {r:31, rA:33, rB:4, d:"Guainía", lt:3.0, ln:-68.5, p60:5.65,vel:2.02,env:14.9,ipm:49.0,cot:113.2,camas:1.05,th:258.8,sal:39.5, subA:2.8,subB:60.0,ive:28.4,q:"Aún joven, estructuralmente vulnerable", nA:0.0,nV:7.1,nE:0.0,nI:49.0,nC:88.7,nCam:79.0,nTH:0.0,nSal:39.5},
+  {r:32, rA:26, rB:22, d:"Cesar", lt:9.5, ln:-73.5, p60:9.99,vel:2.73,env:33.9,ipm:13.4,cot:305.2,camas:3.05,th:175.9,sal:19.5, subA:24.9,subB:34.9,ive:27.8,q:"Ventana de acción", nA:27.5,nV:25.0,nE:21.3,nI:13.4,nC:69.5,nCam:39.0,nTH:0.0,nSal:19.5},
+  {r:33, rA:31, rB:17, d:"Amazonas", lt:-1.0, ln:-71.9, p60:7.56,vel:2.56,env:21.9,ipm:15.6,cot:215.4,camas:2.55,th:185.9,sal:24.5, subA:14.5,subB:40.3,ive:25.2,q:"Ventana de acción", nA:12.1,nV:20.7,nE:7.9,nI:15.6,nC:78.5,nCam:49.0,nTH:0.0,nSal:24.5}
+];
+
+const QC = {
+  'Zona Crítica':'#B83232',
+  'Transición avanzada':'#C96B1A',
+  'Aún joven, estructuralmente vulnerable':'#1E6E5C',
+  'Ventana de acción':'#7A5C0A'
+};
+const QB = {
+  'Zona Crítica':'bc',
+  'Transición avanzada':'bt',
+  'Aún joven, estructuralmente vulnerable':'bj',
+  'Ventana de acción':'bv'
+};
+
+// Años que tardó (o tardará) cada país en pasar del 10% al 20% de población mayor de 60
+// Fuentes: UN WPP 2022, cálculos propios sobre trayectorias históricas y proyecciones
+// Francia cruzó 10% ~1940 y llegó al 20% ~2000 = 60 años
+// Alemania: 10% ~1930 → 20% ~1995 = 65 años
+// Japón: 10% ~1985 → 20% ~2005 = 20 años
+// Corea del Sur: 10% ~2015 → 20% ~2026 = 11 años (proyectado)
+// Brasil: 10% ~2007 → 20% ~2040 = 33 años (proyectado)
+// Chile: 10% ~1998 → 20% ~2030 = 32 años (proyectado)
+// Colombia: 10% ~2010 → 20% ~2040 = 30 años (proyectado)
+const GPH_BARS = {
+  countries: ['Francia','Alemania','Japón','Brasil','Chile','Colombia','Corea del Sur'],
+  years:     [60,        65,        20,     33,      32,     30,        11],
+  colors:    ['#C4B59A','#C4B59A','#C4B59A','#C4B59A','#C4B59A','#B83232','#C4B59A'],
+  // decade crossed 10%:
+  since:     ['~1940',  '~1930',  '~1985','~2007', '~1998','~2010',   '~2015']
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INSIGHT GENERATOR
+// ─────────────────────────────────────────────────────────────────────────────
+function insight(d) {
+  const paceWord = d.vel >= 5.0 ? 'muy acelerado' : d.vel >= 4.0 ? 'acelerado' : d.vel >= 3.0 ? 'sostenido' : 'moderado';
+  const ipmWord  = d.ipm >= 30 ? 'alto' : d.ipm >= 15 ? 'moderado' : 'bajo';
+  const cotWord  = d.cot >= 400 ? 'relativamente alta' : d.cot >= 250 ? 'media' : 'baja';
+
+  // Años hasta umbral ONU
+  const THRESHOLD = 14.0, YR_BASE = 2023, YR_END = 2035;
+  const ratePerYear = d.vel / (YR_END - YR_BASE);
+  let ventFrase;
+  if (d.p60 >= THRESHOLD) {
+    const yrsSince = Math.round((d.p60 - THRESHOLD) / ratePerYear);
+    ventFrase = `El departamento cruzó el umbral internacional de "sociedad envejecida" hace aproximadamente ${yrsSince} año${yrsSince !== 1 ? 's' : ''}.`;
+  } else {
+    const yLeft = Math.round((THRESHOLD - d.p60) / ratePerYear);
+    const crossYear = YR_BASE + yLeft;
+    ventFrase = `Con la trayectoria actual, cruzará el umbral internacional de "sociedad envejecida" en aproximadamente ${yLeft} año${yLeft !== 1 ? 's' : ''} (~${crossYear}).`;
+  }
+
+  if (d.q === 'Zona Crítica')
+    return `${d.d} enfrenta la convergencia más crítica: envejecimiento avanzado (${d.p60.toFixed(1)}% de mayores de 60, ritmo ${paceWord}) con déficit estructural de capacidad simultáneo. ${ventFrase} La pobreza multidimensional (${d.ipm.toFixed(1)}%) y la cobertura contributiva ${cotWord} limitan la respuesta institucional precisamente cuando más se necesita.`;
+  if (d.q === 'Transición avanzada')
+    return `${d.d} está entre los territorios con mayor presión demográfica del país: ${d.p60.toFixed(1)}% de su población supera los 60 años y crece a ritmo ${paceWord}. ${ventFrase} Ha avanzado en capacidad estructural —pobreza ${ipmWord} (${d.ipm.toFixed(1)}%) y cobertura contributiva ${cotWord}— pero la velocidad del envejecimiento exige decisiones que no admiten espera.`;
+  if (d.q === 'Aún joven, estructuralmente vulnerable')
+    return `${d.d} mantiene una población relativamente joven (${d.p60.toFixed(1)}% de mayores de 60), pero sus condiciones estructurales muestran rezagos: pobreza multidimensional ${ipmWord} (${d.ipm.toFixed(1)}%) y cobertura contributiva ${cotWord}. ${ventFrase} Si las condiciones no mejoran antes de que llegue la presión demográfica, la respuesta institucional será insuficiente.`;
+  return `${d.d} combina presión demográfica aún moderada (${d.p60.toFixed(1)}% de mayores de 60) con capacidad estructural por encima del umbral crítico. ${ventFrase} Es uno de los territorios con mayor margen para anticiparse, pero ese margen tiene fecha de vencimiento: la trayectoria proyectada no deja espacio para la inacción.`;
+}
+
+// UPDATE DETAIL PANEL
+// ─────────────────────────────────────────────────────────────────────────────
+function updateD(d, p) {
+  document.getElementById(p+'-name').textContent = d.d;
+  document.getElementById(p+'-badge').innerHTML = `<span class="qbadge ${QB[d.q]}">${d.q}</span>`;
+  document.getElementById(p+'-ins').textContent = insight(d);
+
+  document.getElementById(p+'-subA').textContent = d.subA.toFixed(1);
+  document.getElementById(p+'-rkA').textContent  = `#${d.rA} de 33 en presión`;
+  document.getElementById(p+'-subB').textContent = d.subB.toFixed(1);
+  document.getElementById(p+'-rkB').textContent  = `#${d.rB} de 33 en capacidad`;
+
+  const set = (id, val, bar, pct) => {
+    document.getElementById(p+'-v'+id).textContent = val;
+    document.getElementById(p+'-b'+id).style.width = pct+'%';
+  };
+  set(1, d.p60.toFixed(1)+'%',        'b1', d.nA);
+  set(2, '+'+d.vel.toFixed(2)+' pp',  'b2', d.nV);
+  set(3, d.env.toFixed(0),            'b3', d.nE);
+  set(4, d.ipm.toFixed(1)+'%',              'b4', d.nI);
+  set(5, d.cot+'/1.000 hab.',               'b5', d.nC);
+  set(6, d.camas.toFixed(2)+'/1.000 hab.',  'b6', d.nCam);
+  set(7, d.th.toFixed(1)+'/10.000 hab.',    'b7', d.nTH);
+
+  const circ = 131.9, offset = circ - (d.ive/100)*circ;
+  const ring = document.getElementById(p+'-ring');
+  ring.style.strokeDashoffset = offset;
+  const col = d.ive>=65?'#B83232': d.ive>=50?'#C96B1A': d.ive>=40?'#7A5C0A':'#1E6E5C';
+  ring.style.stroke = col;
+  document.getElementById(p+'-score').textContent = d.ive.toFixed(0);
+  document.getElementById(p+'-rank').innerHTML    = `#${d.r}<span> de 33 · IVE</span>`;
+
+  // Ventana de preparación
+  const THRESHOLD = 14.0, YR_BASE = 2023, YR_END = 2035;
+  const ratePerYear = d.vel / (YR_END - YR_BASE);
+  let ventLabel, ventYears, ventSub, ventPct, ventColor;
+  if (d.p60 >= THRESHOLD) {
+    const yrsSince = Math.round((d.p60 - THRESHOLD) / ratePerYear);
+    const crossYear = YR_BASE - yrsSince;
+    ventYears = yrsSince + ' años';
+    ventSub   = 'desde que cruzó (~' + crossYear + ')';
+    ventLabel = 'Umbral ONU superado · Urgencia alta';
+    ventPct   = 100; ventColor = 'var(--red)';
+  } else {
+    const yLeft = (THRESHOLD - d.p60) / ratePerYear;
+    const crossYear = Math.round(YR_BASE + yLeft);
+    const urgency = Math.round((0.55 * Math.min(1, 12/Math.max(yLeft,0.5)) + 0.45 * d.subB/100) * 100);
+    ventYears = Math.round(yLeft) + ' años';
+    ventSub   = 'para cruzar el umbral ONU (~' + crossYear + ')';
+    ventColor = urgency >= 70 ? 'var(--red)' : urgency >= 50 ? 'var(--orange)' : urgency >= 30 ? '#7A8C3C' : 'var(--teal)';
+    ventLabel = urgency >= 70 ? 'Urgencia alta · ' + urgency + '/100'
+              : urgency >= 50 ? 'Urgencia media-alta · ' + urgency + '/100'
+              : urgency >= 30 ? 'Urgencia media · ' + urgency + '/100'
+              : 'Margen disponible · ' + urgency + '/100';
+    ventPct = urgency;
+  }
+  ['s','m'].filter(px => px === p).forEach(px => {
+    document.getElementById(px+'-vent-years').textContent = ventYears;
+    document.getElementById(px+'-vent-years').style.color = ventColor;
+    document.getElementById(px+'-vent-sub').textContent   = ventSub;
+    document.getElementById(px+'-vent-label').textContent = ventLabel;
+    document.getElementById(px+'-vent-bar').style.width   = ventPct + '%';
+    document.getElementById(px+'-vent-bar').style.background = ventColor;
+  });
+
+  document.querySelectorAll('.dc').forEach(c => c.classList.remove('active'));
+  const card = document.getElementById('card-'+d.r);
+  if (card) { card.classList.add('active'); card.scrollIntoView({behavior:'smooth', block:'nearest'}); }
+
+  // Sync selects
+  ['scatter-filter','map-filter'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = d.d;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TAB SWITCH
+// ─────────────────────────────────────────────────────────────────────────────
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tpanel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tbtn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  btn.classList.add('active');
+  if (tab === 'map' && !window._mapBuilt) { buildMap(); window._mapBuilt = true; }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FILTER FUNCTIONS
+// ─────────────────────────────────────────────────────────────────────────────
+function filterDept(p, name) {
+  if (!name) return;
+  const d = DATA.find(x => x.d === name);
+  if (d) updateD(d, p);
+}
+
+let activeQuad = '';
+function filterQuad(q) {
+  activeQuad = q;
+  buildScatter();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GLOBAL CHART
+// ─────────────────────────────────────────────────────────────────────────────
+function buildGlobal() {
+  // Sort ascending so longest bar is at top
+  const order = [...GPH_BARS.countries.keys()].sort((a,b) => GPH_BARS.years[b] - GPH_BARS.years[a]);
+  const sortedC = order.map(i => GPH_BARS.countries[i]);
+  const sortedY = order.map(i => GPH_BARS.years[i]);
+  const sortedCol = order.map(i => GPH_BARS.colors[i]);
+  const sortedSince = order.map(i => GPH_BARS.since[i]);
+
+  const trace = {
+    type: 'bar',
+    orientation: 'h',
+    x: sortedY,
+    y: sortedC,
+    marker: { color: sortedCol },
+    text: sortedY.map((v,i) => `${v} años`),
+    textposition: 'outside',
+    textfont: { family:'DM Mono, monospace', size:11, color:'#2E2B22' },
+    hovertemplate: '<b>%{y}</b><br>%{x} años para doblar la proporción de mayores de 60<extra></extra>',
+    cliponaxis: false
+  };
+
+  const layout = {
+    paper_bgcolor: 'transparent',
+    plot_bgcolor:  'transparent',
+    font: { family:'DM Mono, monospace', size:10, color:'#5C5749' },
+    xaxis: {
+      title: { text:'Años para pasar del 10% al 20% de población mayor de 60', standoff:12, font:{size:10} },
+      gridcolor: 'rgba(24,22,15,0.07)', zeroline:false, tickfont:{size:10}, color:'#5C5749',
+      range: [0, 82]
+    },
+    yaxis: {
+      tickfont: { size:11, family:'DM Mono, monospace', color:'#2E2B22' },
+      color: '#2E2B22'
+    },
+    shapes: [{
+      type:'line', x0:30, x1:30, y0:-0.5, y1:6.5,
+      line:{ color:'rgba(184,50,50,0.35)', width:1.5, dash:'dot' }
+    }],
+    annotations: [
+      {
+        x:30, y:6.8, text:'Colombia: 30 años', showarrow:false,
+        font:{ size:9, family:'DM Mono, monospace', color:'rgba(184,50,50,0.75)' },
+        xanchor:'center'
+      },
+      {
+        x:65, y:0.5,
+        text:'65 años',
+        showarrow:false,
+        font:{ size:9, family:'DM Mono, monospace', color:'rgba(24,22,15,0.35)' }
+      }
+    ],
+    margin: { t:20, b:60, l:110, r:80 },
+    bargap: 0.35,
+    hoverlabel: { bgcolor:'white', bordercolor:'rgba(24,22,15,0.15)', font:{family:'Source Serif 4, serif', size:12} }
+  };
+
+  Plotly.newPlot('global-chart', [trace], layout, {displayModeBar:false, responsive:true});
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SCATTER CHART
+// ─────────────────────────────────────────────────────────────────────────────
+function buildScatter() {
+  const filtered = activeQuad ? DATA.filter(d => d.q === activeQuad) : DATA;
+  const byQ = {};
+  filtered.forEach(d => { if (!byQ[d.q]) byQ[d.q]=[]; byQ[d.q].push(d); });
+
+  // Thresholds based on international standards (not medians)
+  // SubA=42: ONU "aging society" threshold (14% población 60+) — normalizado min-max interno
+  // SubB=51.3: umbral recalibrado con goalposts fijos OMS
+  //   IPM=25% (OPHI) → 25.0 en escala | Cot=300/1k (OIT) → 70.0 | Cam=2.5/1k (OMS) → 50.0 | TH=44.5/10k (OMS) → 55.5
+  //   SubB = 0.35×25.0 + 0.35×70.0 + 0.30×((50.0+55.5)/2) = 51.3
+  const medA = 42, medB = 51.3;
+
+  const traces = [];
+
+  // Shaded quadrant backgrounds
+  const bgAlpha = '0.06';
+  traces.push({ type:'scatter', mode:'markers', showlegend:false, hoverinfo:'none',
+    x:[0,medA,medA,0], y:[medB,medB,100,100],
+    fill:'toself', fillcolor:`rgba(184,50,50,${bgAlpha})`, line:{width:0}, marker:{size:0} });
+  traces.push({ type:'scatter', mode:'markers', showlegend:false, hoverinfo:'none',
+    x:[medA,100,100,medA], y:[medB,medB,100,100],
+    fill:'toself', fillcolor:`rgba(201,107,26,${bgAlpha})`, line:{width:0}, marker:{size:0} });
+  traces.push({ type:'scatter', mode:'markers', showlegend:false, hoverinfo:'none',
+    x:[0,medA,medA,0], y:[0,0,medB,medB],
+    fill:'toself', fillcolor:`rgba(30,110,92,${bgAlpha})`, line:{width:0}, marker:{size:0} });
+  traces.push({ type:'scatter', mode:'markers', showlegend:false, hoverinfo:'none',
+    x:[medA,100,100,medA], y:[0,0,medB,medB],
+    fill:'toself', fillcolor:`rgba(122,92,10,${bgAlpha})`, line:{width:0}, marker:{size:0} });
+
+  // Data traces
+  Object.entries(byQ).forEach(([q, items]) => {
+    traces.push({
+      type:'scatter', mode:'markers+text', name:q,
+      x:items.map(d=>d.subA), y:items.map(d=>d.subB),
+      text:items.map(d=>d.d.replace('San Andrés y Providencia','S. Andrés')),
+      textposition:'top center',
+      textfont:{family:'DM Mono, monospace', size:8, color:'rgba(24,22,15,0.65)'},
+      marker:{
+        size:items.map(d => Math.max(12, d.ive*0.36)),
+        color:QC[q], opacity:0.82,
+        line:{color:'white', width:1.5}
+      },
+      customdata:items.map(d=>d.r),
+      hovertemplate:'<b>%{text}</b><br>Presión (SubA): %{x:.1f}<br>Déficit (SubB): %{y:.1f}<extra></extra>'
+    });
+  });
+
+  const layout = {
+    paper_bgcolor:'transparent', plot_bgcolor:'transparent',
+    font:{family:'DM Mono, monospace', color:'#5C5749'},
+    xaxis:{
+      title:{text:'Subíndice A: Presión demográfica (0–100)',standoff:14,font:{size:10,family:'DM Mono, monospace'}},
+      range:[0,105], gridcolor:'rgba(24,22,15,0.06)', zeroline:false, tickfont:{size:10}, color:'#5C5749'
+    },
+    yaxis:{
+      title:{text:'Subíndice B: Déficit de capacidad (0–100)',standoff:14,font:{size:10,family:'DM Mono, monospace'}},
+      range:[0,108], gridcolor:'rgba(24,22,15,0.06)', zeroline:false, tickfont:{size:10}, color:'#5C5749'
+    },
+    shapes:[
+      {type:'line',x0:medA,x1:medA,y0:0,y1:105,line:{color:'rgba(24,22,15,0.18)',width:1,dash:'dot'}},
+      {type:'line',x0:0,x1:105,y0:medB,y1:medB,line:{color:'rgba(24,22,15,0.18)',width:1,dash:'dot'}}
+    ],
+    annotations:[
+      {x:3,y:103,  text:'Zona Crítica',          showarrow:false, font:{size:9,family:'DM Mono, monospace',color:'rgba(184,50,50,0.55)'}},
+      {x:55,y:103, text:'Transición avanzada',    showarrow:false, font:{size:9,family:'DM Mono, monospace',color:'rgba(201,107,26,0.55)'}},
+      {x:3,y:5,    text:'Joven, vulnerable',      showarrow:false, font:{size:9,family:'DM Mono, monospace',color:'rgba(30,110,92,0.55)'}},
+      {x:60,y:5,   text:'Ventana de acción', showarrow:false, font:{size:9,family:'DM Mono, monospace',color:'rgba(122,92,10,0.55)'}, xanchor:'left'}
+    ],
+    legend:{x:0.01,y:0.99,bgcolor:'rgba(246,241,231,0.88)',bordercolor:'rgba(24,22,15,0.12)',borderwidth:1,font:{size:9.5,family:'DM Mono, monospace',color:'#2E2B22'},itemclick:false},
+    margin:{t:10,b:60,l:68,r:20},
+    hoverlabel:{bgcolor:'white',bordercolor:'rgba(24,22,15,0.15)',font:{family:'Source Serif 4, serif',size:12}}
+  };
+
+  if (window._scatterBuilt) {
+    Plotly.react('scatter-chart', traces, layout);
+  } else {
+    Plotly.newPlot('scatter-chart', traces, layout, {displayModeBar:false, responsive:true});
+    window._scatterBuilt = true;
+  }
+  document.getElementById('scatter-chart').on('plotly_click', ev => {
+    const d = DATA.find(x => x.r === ev.points[0].customdata);
+    if (d) updateD(d,'s');
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MAP CHART
+// ─────────────────────────────────────────────────────────────────────────────
+function buildMap() {
+  const byQ = {};
+  DATA.forEach(d => { if (!byQ[d.q]) byQ[d.q]=[]; byQ[d.q].push(d); });
+
+  const traces = Object.entries(byQ).map(([q, items]) => ({
+    type:'scattergeo', mode:'markers+text', name:q,
+    lat:items.map(d=>d.lt), lon:items.map(d=>d.ln),
+    text:items.map(d=>d.d),
+    textposition:'top center',
+    textfont:{family:'DM Mono, monospace', size:7.5, color:'rgba(24,22,15,0.65)'},
+    marker:{
+      size:items.map(d => Math.max(9, d.ive*0.44)),
+      color:QC[q], opacity:0.85,
+      line:{color:'white', width:1.5}
+    },
+    customdata:items.map(d=>d.r),
+    hovertemplate:'<b>%{text}</b><br>IVE: %{customdata}<extra></extra>'
+  }));
+
+  const layout = {
+    paper_bgcolor:'transparent', height:480,
+    geo:{
+      scope:'south america',
+      center:{lat:4.5, lon:-74.0},
+      projection:{type:'mercator', scale:4.5},
+      bgcolor:'#EDE8DC',
+      landcolor:'#E4DDD0',
+      oceancolor:'#CDD8E0',
+      subunitcolor:'rgba(24,22,15,0.18)',
+      countrycolor:'rgba(24,22,15,0.28)',
+      coastlinecolor:'rgba(24,22,15,0.28)',
+      showland:true, showocean:true, showcoastlines:true,
+      showcountries:true, showsubunits:true, showframe:false
+    },
+    legend:{x:0.01,y:0.99,bgcolor:'rgba(246,241,231,0.9)',bordercolor:'rgba(24,22,15,0.12)',borderwidth:1,font:{size:9,family:'DM Mono, monospace',color:'#2E2B22'},itemclick:false},
+    margin:{t:0,b:0,l:0,r:0},
+    hoverlabel:{bgcolor:'white',bordercolor:'rgba(24,22,15,0.15)',font:{family:'Source Serif 4, serif',size:12}}
+  };
+
+  Plotly.newPlot('map-chart', traces, layout, {displayModeBar:false, responsive:true});
+  document.getElementById('map-chart').on('plotly_click', ev => {
+    const d = DATA.find(x => x.r === ev.points[0].customdata);
+    if (d) updateD(d,'m');
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RANKING
+// ─────────────────────────────────────────────────────────────────────────────
+let rankMode = 'ive';
+
+function switchRank(mode, btn) {
+  rankMode = mode;
+  document.querySelectorAll('.rtbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildRanking();
+}
+
+function buildRanking() {
+  const g = document.getElementById('rgrid');
+  g.innerHTML = '';
+
+  const sorted = [...DATA].sort((a,b) => {
+    if (rankMode === 'ive')  return b.ive  - a.ive;
+    if (rankMode === 'subA') return b.subA - a.subA;
+    return b.subB - a.subB;
+  });
+
+  sorted.forEach((d, i) => {
+    const c    = QC[d.q];
+    const rank = i + 1;
+    const val  = rankMode === 'ive' ? d.ive : rankMode === 'subA' ? d.subA : d.subB;
+    const lbl  = rankMode === 'ive' ? 'IVE' : rankMode === 'subA' ? 'Presión' : 'Déficit cap.';
+    const el   = document.createElement('div');
+    el.className = 'dc'; el.id = 'card-'+d.r;
+    el.innerHTML = `
+      <div class="dc-stripe" style="background:${c}"></div>
+      <div class="dct">
+        <div class="dcn">${d.d}</div>
+        <div class="dcr">#${rank}</div>
+      </div>
+      <div class="dcb"><div class="dcf" style="width:${val}%;background:${c};opacity:.75"></div></div>
+      <div class="dcs">${lbl} <strong>${val.toFixed(1)}</strong> · ${d.p60.toFixed(1)}% pob.60+ · IPM ${d.ipm.toFixed(0)}%</div>`;
+    el.addEventListener('click', () => { updateD(d,'s'); updateD(d,'m'); });
+    g.appendChild(el);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// QUADRANT TOGGLE
+// ─────────────────────────────────────────────────────────────────────────────
+function toggleQuads(header) {
+  const body = document.getElementById('quad-body');
+  const icon = header.querySelector('.toggle-icon');
+  body.classList.toggle('open');
+  icon.classList.toggle('open');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POPULATE SELECTS
+// ─────────────────────────────────────────────────────────────────────────────
+function populateSelects() {
+  const sorted = [...DATA].sort((a,b) => a.d.localeCompare(b.d,'es'));
+  ['scatter-filter','map-filter'].forEach(id => {
+    const sel = document.getElementById(id);
+    sorted.forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d.d; opt.textContent = d.d;
+      sel.appendChild(opt);
+    });
+  });
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// VENTANA DE PREPARACIÓN
+// ─────────────────────────────────────────────────────────────────────────────
+function buildVentana() {
+  const THRESHOLD = 14.0; // umbral ONU sociedad envejecida (% pob 60+)
+  const YR_BASE   = 2023;
+  const YR_END    = 2035;
+  const SPAN      = YR_END - YR_BASE; // 12 años
+
+  // Calcular años para cada departamento
+  const cards = DATA.map(d => {
+    const ratePerYear = d.vel / SPAN; // puntos por año
+    let yearsLeft, crossed, crossYear;
+
+    if (d.p60 >= THRESHOLD) {
+      // Ya cruzó: calcular hace cuántos años (aprox, hacia atrás desde 2023)
+      crossed = true;
+      const yrsSince = (d.p60 - THRESHOLD) / ratePerYear;
+      crossYear = Math.round(YR_BASE - yrsSince);
+      yearsLeft = YR_BASE - crossYear;
+    } else {
+      crossed = false;
+      yearsLeft = (THRESHOLD - d.p60) / ratePerYear;
+      crossYear = Math.round(YR_BASE + yearsLeft);
+    }
+
+    // Urgencia: combina tiempo restante (0=mucho, 1=poco/ya cruzó) y déficit capacidad
+    // Si ya cruzó → tiempo_score = 1.0
+    // Si quedan < 5 años → tiempo_score = 0.9
+    // Si quedan 5-10 → 0.6, 10-20 → 0.3, >20 → 0.1
+    let tScore = crossed ? 1.0
+               : yearsLeft < 5  ? 0.9
+               : yearsLeft < 10 ? 0.6
+               : yearsLeft < 20 ? 0.3 : 0.1;
+    // Déficit capacidad normalizado (subB/100)
+    const cScore = d.subB / 100;
+    const urgency = Math.round((0.55 * tScore + 0.45 * cScore) * 100);
+
+    return { ...d, yearsLeft: Math.round(yearsLeft), crossed, crossYear, urgency, tScore };
+  });
+
+  // Ordenar: ya cruzados primero (por años desde cruce desc), luego por urgencia desc
+  cards.sort((a, b) => {
+    if (a.crossed !== b.crossed) return a.crossed ? -1 : 1;
+    if (a.crossed) return b.yearsLeft - a.yearsLeft;
+    return b.urgency - a.urgency;
+  });
+
+  const grid = document.getElementById('ventana-grid');
+  grid.innerHTML = '';
+
+  cards.forEach(d => {
+    const urgColor = d.urgency >= 70 ? 'var(--red)'
+                   : d.urgency >= 50 ? 'var(--orange)'
+                   : d.urgency >= 30 ? '#7A8C3C'
+                   : 'var(--teal)';
+    const urgLabel = d.urgency >= 70 ? 'Urgencia alta'
+                   : d.urgency >= 50 ? 'Urgencia media-alta'
+                   : d.urgency >= 30 ? 'Urgencia media'
+                   : 'Margen disponible';
+
+    const yearsHtml = d.crossed
+      ? `<div class="vcard-years" style="color:var(--red)">${d.yearsLeft} años</div>
+         <div class="vcard-years-label">desde que cruzó el umbral ONU (~${d.crossYear})</div>`
+      : `<div class="vcard-years" style="color:${urgColor}">${d.yearsLeft} años</div>
+         <div class="vcard-years-label">estimados para cruzar el umbral ONU (~${d.crossYear})</div>`;
+
+    const card = document.createElement('div');
+    card.className = 'vcard';
+    card.innerHTML = `
+      <div class="vcard-name">${d.d}</div>
+      <div class="vcard-quad">${d.q}</div>
+      ${yearsHtml}
+      <div class="vcard-urgency-bar">
+        <div class="vcard-urgency-fill" style="width:${d.urgency}%;background:${urgColor};"></div>
+      </div>
+      <div class="vcard-urgency-label">${urgLabel} · ${d.urgency}/100</div>
+      <div class="vcard-stats">
+        <div class="vcard-stat">Pob. 60+ <strong>${d.p60.toFixed(1)}%</strong></div>
+        <div class="vcard-stat">Crec. anual <strong>+${(d.vel/12).toFixed(2)}pp</strong></div>
+        <div class="vcard-stat">SubB <strong>${d.subB.toFixed(1)}</strong></div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TOGGLE METODOLOGÍA
+// ─────────────────────────────────────────────────────────────────────────────
+function toggleMeto(header) {
+  const body = header.parentElement.querySelector('.meto-body');
+  const icon = header.querySelector('.meto-toggle-icon');
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  icon.textContent = isOpen ? '▼ VER NOTA' : '▲ CERRAR';
+  icon.classList.toggle('open', !isOpen);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  populateSelects();
+  buildGlobal();
+  buildScatter();
+  buildRanking();
+});
+</script>
+</body>
+</html>
